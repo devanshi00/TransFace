@@ -55,7 +55,7 @@ def inference(weight, name, images):
         img = torch.from_numpy(img).unsqueeze(0).float()
         img.div_(255).sub_(0.5).div_(0.5)
         feat = net(img)
-        feat = feat[0].numpy()
+        feat = feat[0].detach().numpy()
         embeddings.append(feat)
 
     return embeddings
