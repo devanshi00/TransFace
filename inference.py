@@ -23,7 +23,9 @@ def inference(weight, name, img):
     net.load_state_dict(torch.load(weight))
     net.eval()
     feat = net(img).numpy()
+    feat = feat[0].numpy()
     print(feat)
+    return feat
 
 
 if __name__ == "__main__":
