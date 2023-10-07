@@ -68,18 +68,24 @@ def find_names(image, minConf):
     # Get the list of cropped face images
     cropped_test_faces = crop_faces(image, boxes)
     test_embeds = inference(args.weight, args.network, cropped_test_faces)
-    d = np.zeros((len(source_embeddings), len(test_embeds)))
+
+    distances = np.zeros((len(source_embeddings), len(test_embeds)))
+
     for i, s in enumerate(source_embeddings):
         for j, t in enumerate(test_embeds):
-            d[i][j] = findCosineDistance(s, t)
-    ids = np.argmin(d, axis = 0)
+            distances[i][j] = findCosineDistance(s, t)
+
+    ids = np.argmin(distances, axis=0)
     roll_nos = []
+
     for j, i in enumerate(ids):
-        if 1 - d[i][j] > args.minConf:
-            roll_nos.append(source_imgs[i].split("/")[-1].split(".")[0])
+        if 1 - distances[i][j] > minConf:
+            roll_nos.append(source_images[i].split("/")[-1].split(".")[0])
         else:
             roll_nos.append("Unknown")
+
     return ",".join(roll_nos)
+
 
 
 if __name__ == "__main__":
