@@ -68,7 +68,10 @@ def find_names(image, minConf):
     # Get the list of cropped face images
     cropped_test_faces = crop_faces(image, boxes)
     test_embeds = inference(args.weight, args.network, cropped_test_faces)
-
+    source_embeddings = np.array(source_embeddings)
+    source_embeddings = np.squeeze(source_embeddings, axis=1)
+    test_embeds= np.array(source_embeddings)
+    test_embeds=  np.squeeze(source_embeddings, axis=1)
     distances = np.zeros((len(source_embeddings), len(test_embeds)))
 
     for i, s in enumerate(source_embeddings):
