@@ -22,7 +22,7 @@ def inference(weight, name, img):
     net = get_model(name, fp16=False)
     net.load_state_dict(torch.load(weight))
     net.eval()
-    feat = net(img).numpy()
+    feat = net(img)
     feat = feat[0].numpy()
     print(feat)
     return feat
