@@ -2,10 +2,16 @@ import argparse
 import cv2
 import numpy as np
 import torch
-
+import pickle
 from backbones import get_model
+# Load source_images and source_faces from files
+
+loaded_source_faces = []
 
 
+
+with open('source_faces.pkl', 'rb') as file:
+    loaded_source_faces = pickle.load(file)
 @torch.no_grad()
 def inference(weight, name, images):
     embeddings = []  # Create an empty list to store embeddings
