@@ -20,7 +20,7 @@ def inference(weight, name, images):
     net.eval()
 
     for img in images:
-        img = np.array(img)  # Convert PIL image to NumPy array
+        img = cv2.imread(img)  
         img = cv2.resize(img, (112, 112))
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = np.transpose(img, (2, 0, 1))
