@@ -42,7 +42,7 @@ if __name__ == "__main__":
     source_embeddings_1 = inference(args.weight, args.network, source_faces)
 
     # Now, the 'source_embeddings' list contains embeddings for all images in source_faces
-    print("Embeddings for all images:", source_embeddings)
+    print("Embeddings for all images:", source_embeddings_1)
 
     # Save source_embeddings to a file using pickle
     with open('source_embeddings_1.pkl', 'wb') as file:
