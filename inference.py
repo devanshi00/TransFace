@@ -48,6 +48,6 @@ if __name__ == "__main__":
     with open('source_embeddings.pkl', 'wb') as file:
         pickle.dump(source_embeddings, file)
 
-    print("Source embeddings saved to 'source_embeddings.pkl'")
+    print("Source embeddings saved to 'source_embeddings.pkl')
 
 
