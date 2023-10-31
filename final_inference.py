@@ -8,13 +8,11 @@ from facenet_pytorch import MTCNN
 import torch
 from PIL import Image
 import numpy as np
-# Determine if an Nvidia GPU is available
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-print('Running on device: {}'.format(device))
+
 
 # Define MTCNN module
 mtcnn = MTCNN(image_size=120, margin=0, min_face_size=20,
-    thresholds=[0.8, 0.9, 0.9], factor=0.709, post_process=True,keep_all=True,device=device)
+    thresholds=[0.8, 0.9, 0.9], factor=0.709, post_process=True,keep_all=True)
 # Load source_images and source_embeddings from files
 source_images = []
 source_embeddings = []
@@ -44,7 +42,7 @@ def inference(weight, name, images):
     embeddings = []  # Create an empty list to store embeddings
 
     net = get_model(name, fp16=False)
-    net.load_state_dict(torch.load(weight))
+    net.load_state_dict(torch.load(weight, map_location='cpu'))
     net.eval()
 
     for img in images:
@@ -59,6 +57,7 @@ def inference(weight, name, images):
         embeddings.append(feat)
 
     return embeddings
+
 
 def find_names(image, minConf):
     # Load an image
@@ -100,7 +99,6 @@ if __name__ == "__main__":
     parser.add_argument('--image', type=str, default=None)
     parser.add_argument('--minConf', type=float, default=0.5)
     args = parser.parse_args()
-    
+
     names = find_names(args.image, args.minConf)
     print("Roll Numbers:", names)
-
